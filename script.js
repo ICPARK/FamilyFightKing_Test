@@ -25,6 +25,12 @@ const winScreen = document.getElementById('win-screen');
 const winMessageElement = document.getElementById('win-message');
 const playNextCharacterButton = document.getElementById('play-next-character-button');
 const returnToSelectionButton = document.getElementById('return-to-selection-button');
+const punchSound = document.getElementById('punch-sound');
+const kickSound = document.getElementById('kick-sound');
+const hitSound = document.getElementById('hit-sound');
+const fightSound = document.getElementById('fight-sound');
+const youwinSound = document.getElementById('youwin-sound');
+const gameoverSound = document.getElementById('gameover-sound');
 
 let selectedCharacter = null;
 let playerHealth = 100;
@@ -44,7 +50,8 @@ const characters = {
     character1: { name: '공주님', img: 'assets/character1.png', feature: '빠른 주먹', color: 'red' },
     character2: { name: '뙈지', img: 'assets/character2.png', feature: '방어 특화', color: 'blue' },
     character3: { name: '새우깡', img: 'assets/character3.png', feature: '강력한 발차기', color: 'green' },
-    character4: { name: '꼼땡이', img: 'assets/character4.png', feature: '콤보 전문가', color: 'yellow' }
+    character4: { name: '꼼땡이', img: 'assets/character4.png', feature: '콤보 전문가', color: 'yellow' },
+    character5: { name: '꾸르미', img: 'assets/character5.png', feature: '소리지르기', color: 'purple' }
 };
 
 // --- Screen Management ---
@@ -157,6 +164,7 @@ function startCountdown() {
             countdownElement.style.display = 'none';
             gameActive = true;
             console.log('Countdown finished. gameActive set to true.');
+            playSound(fightSound); // Play fight sound after countdown
             // Start opponent AI (simple for now)
             opponentAI();
         }
@@ -233,6 +241,7 @@ document.addEventListener('keyup', (e) => {
 // --- Player Attacks ---
 punchButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
+    playSound(punchSound); // Play sound immediately on touch
     if (gameActive) {
         console.log('Punch button touchstart. Game active:', gameActive);
         performAttack('punch');
@@ -242,6 +251,7 @@ punchButton.addEventListener('touchstart', (e) => {
 });
 punchButton.addEventListener('mousedown', (e) => {
     e.preventDefault();
+    playSound(punchSound); // Play sound immediately on click
     if (gameActive) {
         console.log('Punch button mousedown. Game active:', gameActive);
         performAttack('punch');
@@ -252,6 +262,7 @@ punchButton.addEventListener('mousedown', (e) => {
 
 kickButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
+    playSound(kickSound); // Play sound immediately on touch
     if (gameActive) {
         console.log('Kick button touchstart. Game active:', gameActive);
         performAttack('kick');
@@ -261,6 +272,7 @@ kickButton.addEventListener('touchstart', (e) => {
 });
 kickButton.addEventListener('mousedown', (e) => {
     e.preventDefault();
+    playSound(kickSound); // Play sound immediately on click
     if (gameActive) {
         console.log('Kick button mousedown. Game active:', gameActive);
         performAttack('kick');
@@ -313,6 +325,7 @@ function performAttack(type) {
         }
         opponentHealth -= damage;
         opponentHealthValue.textContent = opponentHealth;
+        playSound(hitSound); // Play hit sound when opponent takes damage
         checkGameOver();
     } else {
         console.log('Too far to attack!');
@@ -340,6 +353,7 @@ function opponentAI() {
         let damage = (damageType === 'punch') ? 5 : 10;
         playerHealth -= damage;
         playerHealthValue.textContent = playerHealth;
+        playSound(hitSound); // Play hit sound when player takes damage
 
         opponentElement.classList.add('attacking');
         if (damageType === 'kick') {
@@ -373,11 +387,13 @@ function checkGameOver() {
             gameResultElement.textContent = '패배!';
             resultAnimationElement.classList.remove('win');
             resultAnimationElement.classList.add('lose');
+            playSound(gameoverSound); // Play game over sound
             showScreen('game-over-screen');
         } else {
             gameResultElement.textContent = '승리!';
             resultAnimationElement.classList.remove('lose');
             resultAnimationElement.classList.add('win');
+            playSound(youwinSound); // Play win sound
             handlePlayerWin();
         }
     }
@@ -446,5 +462,13 @@ function updateCharacterDirection() {
     } else {
         playerElement.style.transform = 'scaleX(-1)'; // Face left
         opponentElement.style.transform = 'scaleX(1)'; // Face right
+    }
+}
+
+// Helper function to play sounds
+function playSound(audioElement) {
+    if (audioElement) {
+        audioElement.currentTime = 0; // Rewind to the start
+        audioElement.play().catch(e => console.error("Error playing sound:", e));
     }
 }

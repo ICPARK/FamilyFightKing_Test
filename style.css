@@ -275,11 +275,13 @@ body {
 #player {
     left: 10%;
     background-color: #00aaff; /* Player body color */
+    z-index: 2; /* Player character on top */
 }
 
 #opponent {
     right: 10%;
     background-color: #ff5500; /* Opponent body color */
+    z-index: 1; /* Opponent character below */
 }
 
 /* Character Colors */
