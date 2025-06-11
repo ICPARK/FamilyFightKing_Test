@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>우리가족 격투왕</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <div id="character-selection-screen" class="game-screen active">
+            <h1>우리가족 격투왕 - 캐릭터 선택</h1>
+            <div class="character-list">
+                <div class="character-card" data-character="character1">
+                    <img src="assets/character1.png" alt="공주님">
+                    <p>공주님<br />
+                        (빠른 주먹)</p>
+                </div>
+                <div class="character-card" data-character="character2">
+                    <img src="assets/character2.png" alt="뙈지">
+                    <p>뙈지<br />
+                        (방어 특화)</p>
+                </div>
+                <div class="character-card" data-character="character3">
+                    <img src="assets/character3.png" alt="새우깡">
+                    <p>새우깡<br />
+                        (강력한 발차기)</p>
+                </div>
+                <div class="character-card" data-character="character4">
+                    <img src="assets/character4.png" alt="꼼땡이">
+                    <p>꼼땡이<br />
+                        (콤보 전문가)</p>
+                </div>
+            </div>
+            <button id="start-game-button" disabled>게임 시작</button>
+        </div>
+
+        <div id="game-screen" class="game-screen">
+            <div class="game-info">
+                <div class="player-health">
+                    <p><span id="player-name">플레이어</span> 체력: <span id="player-health-value">100</span></p>
+                </div>
+                <div class="opponent-health">
+                    <p><span id="opponent-name">상대방</span> 체력: <span id="opponent-health-value">100</span></p>
+                </div>
+            </div>
+            <div id="countdown"></div>
+            <div id="game-area">
+                <div id="player" class="character">
+                    <div class="character-face"></div>
+                    <div class="leg left-leg"></div>
+                    <div class="leg right-leg"></div>
+                </div>
+                <div id="opponent" class="character">
+                    <div class="character-face"></div>
+                    <div class="leg left-leg"></div>
+                    <div class="leg right-leg"></div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="movement-controls">
+                    <button id="move-left">←</button>
+                    <button id="move-right">→</button>
+                </div>
+                <div class="action-buttons">
+                    <button id="punch-button">주먹</button>
+                    <button id="kick-button">발차기</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="game-over-screen" class="game-screen">
+            <h1 id="game-result"></h1>
+            <div id="result-animation"></div>
+            <button id="restart-game-button">다시하기</button>
+        </div>
+
+        <div id="win-screen" class="game-screen">
+            <h1 id="win-message"></h1>
+            <div id="win-animation">😄</div>
+            <div class="win-options">
+                <button id="play-next-character-button">Yes</button>
+                <button id="return-to-selection-button">No</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
